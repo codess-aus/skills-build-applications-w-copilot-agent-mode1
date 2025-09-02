@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
+import ImageCarousel from './components/ImageCarousel';
 import './App.css';
 import Users from './components/Users';
 import Teams from './components/Teams';
@@ -13,7 +13,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header octofit-header d-flex align-items-center">
-        <img src={logo} className="App-logo" alt="Octofit logo" />
+        <div style={{ width: 160 }}>
+          <ImageCarousel images={['/mona-the-rivetertocat.png', '/steroidtocat.png', '/yogitocat.png']} />
+        </div>
         <div>
           <h1 className="mb-0">Octofit Tracker</h1>
           <small className="text-light">Team fitness tracking dashboard</small>
