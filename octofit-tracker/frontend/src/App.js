@@ -1,56 +1,41 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import logo from './logo.svg';
+import './App.css';
+import Users from './components/Users';
+import Teams from './components/Teams';
 import Activities from './components/Activities';
 import Leaderboard from './components/Leaderboard';
-import Teams from './components/Teams';
-import Users from './components/Users';
 import Workouts from './components/Workouts';
-import './App.css';
 
 function App() {
+  const [view, setView] = useState('users');
+
   return (
-    <Router>
-      <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
-            <Link className="navbar-brand" to="/">OctoFit Tracker</Link>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNav">
-              <ul className="navbar-nav">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/activities">Activities</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/leaderboard">Leaderboard</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/teams">Teams</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/users">Users</Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/workouts">Workouts</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <div className="mt-4">
-          <Routes>
-            <Route path="/activities" element={<Activities />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/workouts" element={<Workouts />} />
-            <Route path="/" element={<h1>Welcome to OctoFit Tracker</h1>} />
-          </Routes>
+    <div className="App">
+      <header className="App-header octofit-header d-flex align-items-center">
+        <img src={logo} className="App-logo" alt="Octofit logo" />
+        <div>
+          <h1 className="mb-0">Octofit Tracker</h1>
+          <small className="text-light">Team fitness tracking dashboard</small>
         </div>
-      </div>
-    </Router>
+      </header>
+
+      <nav className="my-3 d-flex justify-content-center gap-2">
+        <button className="btn btn-primary" onClick={() => setView('users')}>Users</button>
+        <button className="btn btn-primary" onClick={() => setView('teams')}>Teams</button>
+        <button className="btn btn-primary" onClick={() => setView('activities')}>Activities</button>
+        <button className="btn btn-primary" onClick={() => setView('leaderboard')}>Leaderboard</button>
+        <button className="btn btn-primary" onClick={() => setView('workouts')}>Workouts</button>
+      </nav>
+
+      <main className="container">
+        {view === 'users' && <Users />}
+        {view === 'teams' && <Teams />}
+        {view === 'activities' && <Activities />}
+        {view === 'leaderboard' && <Leaderboard />}
+        {view === 'workouts' && <Workouts />}
+      </main>
+    </div>
   );
 }
 

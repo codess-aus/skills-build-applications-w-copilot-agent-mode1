@@ -1,37 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Leaderboard() {
-  const [leaderboard, setLeaderboard] = useState([]);
-
+export default function Leaderboard() {
+  const [items, setItems] = useState([]);
   useEffect(() => {
-    fetch('https://legendary-telegram-jg46q5grrpc599v.github.dev-8000.app.github.dev/api/leaderboard/')
-      .then(response => response.json())
-      .then(data => setLeaderboard(data))
-      .catch(error => console.error('Error fetching leaderboard:', error));
+    fetch('/api/leaderboard/')
+      .then(r => r.json())
+      .then(setItems)
+      .catch(() => setItems([]));
   }, []);
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center mb-4">Leaderboard</h1>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaderboard.map(entry => (
-            <tr key={entry._id}>
-              <td>{entry.user.username}</td>
-              <td>{entry.score}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <h2>Leaderboard</h2>
+      <ol>
+        {items.map(l => (
+          <li key={l._id}>{l.user && (l.user.username || l.user.email)} — {l.score}</li>
+        ))}
+      </ol>
     </div>
   );
 }
-
-export default Leaderboard;
